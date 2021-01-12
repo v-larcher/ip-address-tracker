@@ -1,10 +1,10 @@
 <script>
-	export let name;
+  import IpAddressTracker from './components/IpAddressTracker.svelte'
 </script>
 
 <style>
 </style>
 
 <main>
-	<h1>Hello {name}!</h1>
+  <IpAddressTracker />
 </main>
