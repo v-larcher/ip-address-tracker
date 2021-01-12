@@ -38,7 +38,7 @@
   }
   div {
     position: relative;
-    z-index: 2000;
+    z-index: 3000;
   }
 </style>
 

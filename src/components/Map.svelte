@@ -1,6 +1,6 @@
 <script>
   import L from "leaflet"
-
+  import "leaflet/dist/leaflet.css"
   let map
   /*let map = L.map("map").setView([51.505, -0.09], 13)
   
@@ -17,15 +17,10 @@
   const initialView = [39.8283, -98.5795]
   function createMap(container) {
     let m = L.map(container, { preferCanvas: true }).setView(initialView, 5)
-    L.tileLayer(
-      "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-      {
-        attribution: `&copy;<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>,
-	        &copy;<a href="https://carto.com/attributions" target="_blank">CARTO</a>`,
-        subdomains: "abcd",
-        maxZoom: 14,
-      }
-    ).addTo(m)
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(m)
 
     return m
   }
@@ -55,5 +50,4 @@
 </style>
 
 <svelte:window on:resize={resizeMap} />
-
 <div use:mapAction />
