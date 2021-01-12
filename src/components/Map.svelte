@@ -1,27 +1,18 @@
 <script>
   import L from "leaflet"
   import "leaflet/dist/leaflet.css"
+
+  export let markerLocation
   let map
-  /*let map = L.map("map").setView([51.505, -0.09], 13)
-  
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  }).addTo(map)
 
-  L.marker([51.5, -0.09])
-    .addTo(map)
-    .bindPopup("A pretty CSS3 popup.<br> Easily customizable.")
-    .openPopup()*/
-
-  const initialView = [39.8283, -98.5795]
   function createMap(container) {
-    let m = L.map(container, { preferCanvas: true }).setView(initialView, 5)
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(m)
-
+    let m = L.map(container, { preferCanvas: true }).setView(markerLocation, 12)
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(m)
+    const icon = L.divIcon({
+      html: `<div><img src="assets/icon-location.svg" alt=""/></div>`,
+      className: "dummy",
+    })
+    L.marker(markerLocation, { icon: icon }).addTo(m)
     return m
   }
 
@@ -42,12 +33,12 @@
 </script>
 
 <style>
-  div {
-    height: 500px;
+  .map {
+    height: 555px;
     margin: -82px -8px 0px -8px;
     border: 3px solid green;
   }
 </style>
 
 <svelte:window on:resize={resizeMap} />
-<div use:mapAction />
+<div class="map" use:mapAction />

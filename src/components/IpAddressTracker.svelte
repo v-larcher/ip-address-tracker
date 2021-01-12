@@ -2,6 +2,26 @@
   import SearchBar from "./SearchBar.svelte"
   import Table from "./Table.svelte"
   import Map from "./Map.svelte"
+
+  let data
+  let markerLocation = [39.8283, -98.5795]
+
+  async function getIPdata(ip) {
+    const response = await fetch(
+      `https://geo.ipify.org/api/v1?apiKey=at_9bN0sOTlec9YB5zjvoBdmRJovxzPq&ipAddress=${ip}`
+    )
+    console.log(response)
+    data = {
+      ip_address: ip,
+      location: `${response.location.region}, ${response.location.city.replace(
+        /[^A-Z]/g,
+        ""
+      )} ${response.location.postalCode}`,
+      timezone: `UTC ${response.location.timezone}`,
+      isp: response.isp,
+    }
+    markerLocation = [response.location.lat, response.location.lng]
+  }
 </script>
 
 <style>
@@ -22,5 +42,5 @@
 <img class="background" src="assets/pattern-bg.png" alt="" />
 <h1>IP Address Tracker</h1>
 <SearchBar />
-<Table />
-<Map />
+<Table {...data} />
+<Map {markerLocation} />
