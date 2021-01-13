@@ -6,21 +6,28 @@
   let data
   let markerLocation = [39.8283, -98.5795]
 
-  async function getIPdata(ip) {
-    const response = await fetch(
-      `https://geo.ipify.org/api/v1?apiKey=at_9bN0sOTlec9YB5zjvoBdmRJovxzPq&ipAddress=${ip}`
+  function handleMessage(event) {
+    console.log(event.detail.ip)
+    getIPdata(event.detail.ip)
+  }
+
+  function getIPdata(ip) {
+    fetch(
+      `https://cors-anywhere.herokuapp.com/https://geo.ipify.org/api/v1?apiKey=at_9bN0sOTlec9YB5zjvoBdmRJovxzPq&ipAddress=${ip}`
     )
-    console.log(response)
-    data = {
-      ip_address: ip,
-      location: `${response.location.region}, ${response.location.city.replace(
-        /[^A-Z]/g,
-        ""
-      )} ${response.location.postalCode}`,
-      timezone: `UTC ${response.location.timezone}`,
-      isp: response.isp,
-    }
-    markerLocation = [response.location.lat, response.location.lng]
+      .then((response) => response.json())
+      .then((r) => {
+        data = {
+          ip_address: ip,
+          location: `${r.location.region}, ${r.location.city.replace(
+            /[^A-Z]/g,
+            ""
+          )} ${r.location.postalCode}`,
+          timezone: `UTC ${r.location.timezone}`,
+          isp: r.isp,
+        }
+        markerLocation = [r.location.lat, r.location.lng]
+      })
   }
 </script>
 
@@ -41,6 +48,6 @@
 
 <img class="background" src="assets/pattern-bg.png" alt="" />
 <h1>IP Address Tracker</h1>
-<SearchBar />
+<SearchBar on:ip={handleMessage} />
 <Table {...data} />
 <Map {markerLocation} />

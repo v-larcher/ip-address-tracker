@@ -1,4 +1,13 @@
 <script>
+  import { createEventDispatcher } from "svelte"
+  const dispatch = createEventDispatcher()
+
+  export let ip = ""
+
+  function onClick() {
+    dispatch("ip", { ip })
+    ip = ""
+  }
 </script>
 
 <style>
@@ -15,12 +24,11 @@
   .text-input {
     margin: 0px -4px 0px 0px;
     border-radius: 15px 0px 0px 15px;
-    color: white;
+    color: gray;
     width: 90%;
     height: 50px;
   }
   .button {
-    margin: 0px;
     background-color: black;
     border-color: black;
     color: white;
@@ -32,7 +40,13 @@
 
 <div class="container">
   <form>
-    <input type="text" class="text-input" />
-    <input type="submit" value=">" class="button" />
+    <input
+      type="text"
+      class="text-input"
+      bind:value={ip}
+      placeholder="Search for any IP address or domain" />
+    <button type="button" class="button" on:click={onClick}>
+      <img src="assets/icon-arrow.svg" alt="" />
+    </button>
   </form>
 </div>

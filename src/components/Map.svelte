@@ -4,15 +4,21 @@
 
   export let markerLocation
   let map
+  let marker
+
+  $: markerLocation && updateMap()
 
   function createMap(container) {
-    let m = L.map(container, { preferCanvas: true }).setView(markerLocation, 12)
+    let m = L.map(container, {
+      preferCanvas: true,
+    })
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(m)
     const icon = L.divIcon({
       html: `<div><img src="assets/icon-location.svg" alt=""/></div>`,
       className: "dummy",
     })
-    L.marker(markerLocation, { icon: icon }).addTo(m)
+    marker = L.marker(markerLocation, { icon: icon }).addTo(m)
+    m.setView(markerLocation, 6)
     return m
   }
 
@@ -30,6 +36,13 @@
       map.invalidateSize()
     }
   }
+
+  function updateMap() {
+    if (map !== undefined && marker !== undefined) {
+      marker.setLatLng(markerLocation)
+      map.setView(markerLocation, 10)
+    }
+  }
 </script>
 
 <style>
@@ -41,4 +54,4 @@
 </style>
 
 <svelte:window on:resize={resizeMap} />
-<div class="map" use:mapAction />
+<div id="map" class="map" use:mapAction />
