@@ -4,21 +4,17 @@
 
   export let markerLocation
   let map
-  let marker
+  let marker = null
 
   $: markerLocation && updateMap()
 
   function createMap(container) {
     let m = L.map(container, {
       preferCanvas: true,
+      zoomControl: false,
     })
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(m)
-    const icon = L.divIcon({
-      html: `<div><img src="assets/icon-location.svg" alt=""/></div>`,
-      className: "dummy",
-    })
-    marker = L.marker(markerLocation, { icon: icon }).addTo(m)
-    m.setView(markerLocation, 6)
+    m.setView(markerLocation, 3)
     return m
   }
 
@@ -38,18 +34,30 @@
   }
 
   function updateMap() {
-    if (map !== undefined && marker !== undefined) {
-      marker.setLatLng(markerLocation)
-      map.setView(markerLocation, 10)
+    if (map !== undefined) {
+      if (marker === null) {
+        const icon = L.divIcon({
+          html: `<div class="marker-location"><img src="assets/icon-location.svg" alt=""/></div>`,
+          className: "marker-location",
+        })
+        marker = L.marker(markerLocation, { icon: icon }).addTo(map)
+      } else {
+        marker.setLatLng(markerLocation)
+      }
+      map.setView(markerLocation, 15)
     }
   }
 </script>
 
 <style>
   .map {
-    height: 555px;
-    margin: -82px -8px 0px -8px;
-    border: 3px solid green;
+    height: calc(100vh - 18rem);
+    width: 100vw;
+    margin: 0 auto;
+    margin-left: -0.5rem;
+  }
+  :global(.marker-location) {
+    transform: translate(-0.825rem, -0.25rem);
   }
 </style>
 

@@ -4,22 +4,26 @@
 
   export let ip = ""
 
-  function onClick() {
+  function submit() {
     dispatch("ip", { ip })
     ip = ""
+  }
+  function handleKeydown(event) {
+    if (event.keyCode === 13) {
+      submit()
+    }
   }
 </script>
 
 <style>
   .container {
-    border: 1px solid red;
     width: 100%;
   }
-  form {
-    margin: auto;
-    width: 25%;
-    border: 3px solid green;
-    padding: 10px;
+  .search-bar {
+    margin: 0 auto;
+    max-width: 30em;
+    min-width: 12em;
+    padding: 1rem 3rem 0rem 3rem;
   }
   .text-input {
     margin: 0px -4px 0px 0px;
@@ -35,18 +39,34 @@
     border-radius: 0px 15px 15px 0px;
     width: 10%;
     height: 50px;
+    cursor: pointer;
+  }
+
+  .button:hover {
+    background-color: hsl(0, 0%, 10%);
+  }
+
+  @media screen and (max-width: 376px) {
+    .text-input {
+      font-size: 89%;
+    }
+    .search-bar {
+      padding: 0.45rem 2rem 0rem 2rem;
+    }
   }
 </style>
 
+<svelte:window on:keydown={handleKeydown} />
+
 <div class="container">
-  <form>
+  <div class="search-bar">
     <input
       type="text"
       class="text-input"
       bind:value={ip}
       placeholder="Search for any IP address or domain" />
-    <button type="button" class="button" on:click={onClick}>
+    <button type="button" class="button" on:click={submit}>
       <img src="assets/icon-arrow.svg" alt="" />
     </button>
-  </form>
+  </div>
 </div>
