@@ -15,6 +15,22 @@
   }
 </script>
 
+<svelte:window on:keydown={handleKeydown} />
+
+<div class="container">
+  <div class="search-bar">
+    <input
+      type="text"
+      class="text-input"
+      bind:value={ip}
+      placeholder="Search for any IP address or domain"
+    />
+    <button type="button" class="button" on:click={submit}>
+      <img src="assets/icon-arrow.svg" alt="" />
+    </button>
+  </div>
+</div>
+
 <style>
   .container {
     width: 100%;
@@ -28,7 +44,8 @@
   .text-input {
     margin: 0px -4px 0px 0px;
     border-radius: 15px 0px 0px 15px;
-    color: gray;
+    color: hsl(0, 0%, 59%);
+    background-color: white;
     width: 90%;
     height: 50px;
   }
@@ -45,6 +62,10 @@
   .button:hover {
     background-color: hsl(0, 0%, 10%);
   }
+  .text-input:hover {
+    background-color: hsl(0, 0%, 97%);
+    color: hsl(0, 0%, 54%);
+  }
 
   @media screen and (max-width: 376px) {
     .text-input {
@@ -55,18 +76,3 @@
     }
   }
 </style>
-
-<svelte:window on:keydown={handleKeydown} />
-
-<div class="container">
-  <div class="search-bar">
-    <input
-      type="text"
-      class="text-input"
-      bind:value={ip}
-      placeholder="Search for any IP address or domain" />
-    <button type="button" class="button" on:click={submit}>
-      <img src="assets/icon-arrow.svg" alt="" />
-    </button>
-  </div>
-</div>

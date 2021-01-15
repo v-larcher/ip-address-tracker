@@ -1,9 +1,6 @@
 <script>
-  import IpAddressTracker from './components/IpAddressTracker.svelte'
+  import IpAddressTracker from "./components/IpAddressTracker.svelte"
 </script>
-
-<style>
-</style>
 
 <main>
   <IpAddressTracker />

@@ -5,6 +5,28 @@
   export let isp = "- - - -"
 </script>
 
+<div class="grid">
+  <div class="cell">
+    <div class="title">IP ADDRESS</div>
+    <div class="data">{ip_address}</div>
+  </div>
+
+  <div class="cell">
+    <div class="title">LOCATION</div>
+    <div class="data">{location}</div>
+  </div>
+
+  <div class="cell">
+    <div class="title">TIMEZONE</div>
+    <div class="data">{timezone}</div>
+  </div>
+
+  <div class="cell">
+    <div class="title">ISP</div>
+    <div class="data">{isp}</div>
+  </div>
+</div>
+
 <style>
   .grid {
     display: grid;
@@ -20,7 +42,6 @@
     margin: 2rem;
     padding: 0px 1rem 0px 0px;
     width: 70%;
-    border: 1px solid red;
   }
   .title {
     color: hsl(0, 0%, 59%);
@@ -46,6 +67,7 @@
     .grid {
       grid-template-columns: none;
       grid-template-areas: "a b c d";
+      transform: translate(0%, 50%);
     }
     .cell {
       margin: 0 auto;
@@ -114,25 +136,3 @@
     }
   }
 </style>
-
-<div class="grid">
-  <div class="cell">
-    <div class="title">IP ADDRESS</div>
-    <div class="data">{ip_address}</div>
-  </div>
-
-  <div class="cell">
-    <div class="title">LOCATION</div>
-    <div class="data">{location}</div>
-  </div>
-
-  <div class="cell">
-    <div class="title">TIMEZONE</div>
-    <div class="data">{timezone}</div>
-  </div>
-
-  <div class="cell">
-    <div class="title">ISP</div>
-    <div class="data">{isp}</div>
-  </div>
-</div>

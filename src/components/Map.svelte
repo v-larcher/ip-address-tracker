@@ -49,6 +49,9 @@
   }
 </script>
 
+<svelte:window on:resize={resizeMap} />
+<div id="map" class="map" use:mapAction />
+
 <style>
   .map {
     height: calc(100vh - 18rem);
@@ -60,6 +63,3 @@
     transform: translate(-0.825rem, -0.25rem);
   }
 </style>
-
-<svelte:window on:resize={resizeMap} />
-<div id="map" class="map" use:mapAction />

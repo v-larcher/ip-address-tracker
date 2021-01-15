@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from "svelte"
+
   import SearchBar from "./SearchBar.svelte"
   import Table from "./Table.svelte"
   import Map from "./Map.svelte"
@@ -8,9 +10,12 @@
   let searching = false
 
   function handleMessage(event) {
-    console.log(event.detail.ip)
     getIPdata(event.detail.ip)
   }
+
+  onMount(() => {
+    getIPdata("")
+  })
 
   function getIPdata(ip) {
     searching = true
@@ -21,7 +26,7 @@
       .then((r) => {
         searching = false
         data = {
-          ip_address: ip,
+          ip_address: r.ip,
           location: `${r.location.region}, ${r.location.city.replace(
             /[^A-Z]/g,
             ""
@@ -33,6 +38,21 @@
       })
   }
 </script>
+
+<header>
+  <div class="col">
+    <h1>IP Address Tracker</h1>
+    <SearchBar on:ip={handleMessage} />
+    <Table {...data} />
+    {#if searching}
+      <div class="lds-ripple">
+        <div />
+        <div />
+      </div>
+    {/if}
+  </div>
+</header>
+<Map {markerLocation} />
 
 <style>
   h1 {
@@ -98,19 +118,3 @@
     }
   }
 </style>
-
-<header>
-  <div class="col">
-    <h1>IP Address Tracker</h1>
-    <SearchBar on:ip={handleMessage} />
-    <Table {...data} />
-    {#if searching}
-      <div class="lds-ripple">
-        <div />
-        <div />
-      </div>
-    {/if}
-  </div>
-</header>
-
-<Map {markerLocation} />
