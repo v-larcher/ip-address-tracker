@@ -117,4 +117,9 @@
       opacity: 0;
     }
   }
+  @media screen and (min-width: 1440px) {
+    .lds-ripple {
+      transform: translate(0%, 50%);
+    }
+  }
 </style>
